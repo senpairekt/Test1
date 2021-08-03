@@ -3,7 +3,7 @@ $(document).ready(function () {
   var x = 0;
   var s = "";
 
-  console.log("Hello Pluralsight!");
+  console.log("hovno");
 
 
 
