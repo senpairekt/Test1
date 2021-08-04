@@ -30,7 +30,7 @@ namespace DutchTreat
             app.UseEndpoints(cfg =>
             {
                 cfg.MapControllerRoute("Default",
-                    "/{controller}/{action)/{{id?}}",
+                    "/{controller}/{action}/{id?}",
                     new {controller = "App", action = "Index" });
             });
         }
