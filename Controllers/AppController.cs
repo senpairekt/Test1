@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DutchTreat.Controllers
 {
@@ -10,7 +7,7 @@ namespace DutchTreat.Controllers
     {
         public IActionResult Index()
         {
-            
+
             return View();
         }
         [HttpGet("contact")]
@@ -20,7 +17,7 @@ namespace DutchTreat.Controllers
 
             throw new InvalidOperationException("Bad things happen");
 
-                return View();    
+            return View();
         }
         public IActionResult About()
         {
