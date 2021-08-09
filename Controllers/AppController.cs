@@ -10,6 +10,21 @@ namespace DutchTreat.Controllers
     {
         public IActionResult Index()
         {
+            
+            return View();
+        }
+        [HttpGet("contact")]
+        public IActionResult Contact()
+        {
+            ViewBag.Title = "Kontakt";
+
+            throw new InvalidOperationException("Bad things happen");
+
+                return View();    
+        }
+        public IActionResult About()
+        {
+            ViewBag.Title = "O nas";
             return View();
         }
     }
