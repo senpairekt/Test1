@@ -18,7 +18,9 @@ namespace DutchTreat.ViewModels
         [Required]
         public string Subject { get; set; }
         [Required]
-        [MaxLength(250, ErrorMessage = "Moc DLHEEEEEEEE")]
+        [MinLength(95, ErrorMessage = "Moc KRATKEEEY MESSAGEE")]
         public string Message { get; set; }
+
     }
 }
+
