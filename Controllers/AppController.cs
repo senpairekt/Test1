@@ -1,11 +1,23 @@
-﻿using DutchTreat.ViewModels;
+﻿using DutchTreat.Services;
+using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace DutchTreat.Controllers
 {
     public class AppController : Controller
     {
+        public AppController (IMailService kkt,ILogger<AppController> logger) 
+        {
+            blab = kkt;
+            this.logger = logger;
+        }
+
+
+        private IMailService blab;
+        private readonly ILogger logger;
+
         public IActionResult Index()
         {
 
@@ -26,7 +38,8 @@ namespace DutchTreat.Controllers
 
             {
                 // send the email
-             
+                blab.SendMessage("feralsvk456@gmail.com", model.Subject, model.Message);
+                logger.LogInformation("jkkjh");
             }
             else
             {
