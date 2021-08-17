@@ -8,15 +8,12 @@ namespace DutchTreat.Controllers
 {
     public class AppController : Controller
     {
-        public AppController (IMailService kkt,ILogger<AppController> logger) 
+        private readonly IMailService _mailService;
+
+        public AppController(IMailService mailService)
         {
-            blab = kkt;
-            this.logger = logger;
+           _mailService= mailService;
         }
-
-
-        private IMailService blab;
-        private readonly ILogger logger;
 
         public IActionResult Index()
         {
@@ -38,8 +35,9 @@ namespace DutchTreat.Controllers
 
             {
                 // send the email
-                blab.SendMessage("feralsvk456@gmail.com", model.Subject, model.Message);
-                logger.LogInformation("jkkjh");
+                _mailService.SendMessage("feralsvk456@gmail.com", model.Subject, model.Message);
+                ViewBag.UserMessage = "Poslane";
+                ModelState.Clear();
             }
             else
             {
