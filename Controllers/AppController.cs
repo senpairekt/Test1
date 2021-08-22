@@ -32,7 +32,6 @@ namespace DutchTreat.Controllers
         public IActionResult Contact(ContactViewModel model)
         {
             if (ModelState.IsValid)
-
             {
                 // send the email
                 _mailService.SendMessage("feralsvk456@gmail.com", model.Subject, model.Message);

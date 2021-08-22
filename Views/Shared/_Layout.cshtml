@@ -3,17 +3,19 @@
 <head>
     <title>Dutch Treat: @ViewBag.Title</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <link href="~/css/site.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/ef714570c6.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header class="container">       
         <nav class="navbar navbar-dark bg-dark navbar-expand-md">
-            <h1 class="navbar-brand">Salam alamalejkum</h1>
+            <h1 class="navbar-brand"><i class="fas fa-thumbs-up fa-5px"> </i> Salam alamalejkum</h1>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#theMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
             <div id="theMenu" class="navbar-collapse collapse">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                     <a class="nav-link" asp-controller="App" asp-action="Index">Domov</a>
                     </li>
@@ -24,9 +26,10 @@
                     <a class="nav-link" asp-controller="App" asp-action="About">O nas</a>
                     </li>
                 </ul>
-            </div>  </nav>
+            </div>
+        </nav>
     </header>
-
+   
     <section class="container">
         <h2>@ViewBag.Title</h2>
         @RenderBody()

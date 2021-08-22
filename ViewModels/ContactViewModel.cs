@@ -20,7 +20,6 @@ namespace DutchTreat.ViewModels
         [Required]
         [MinLength(95, ErrorMessage = "Moc KRATKEEEY MESSAGEE")]
         public string Message { get; set; }
-
     }
 }
 
