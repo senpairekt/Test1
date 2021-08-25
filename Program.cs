@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System;
+using Microsoft.AspNetCore
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using DutchTreat.Data;
 
 namespace DutchTreat
 {
@@ -10,7 +13,17 @@ namespace DutchTreat
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = BuildWebHost(args);
+
+            RunSeeding(host);
+
+            host.Run();
+        }
+
+        private static void RunSeeding(IWebHost host)
+        {
+            var seeder = host.Services.GetService<DutchSeeder>();
+            seeder.Seed();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
