@@ -16,6 +16,7 @@ namespace DutchTreat.Data
         public DutchSeeder(DutchContext ctx, IWebHostEnvironment env)
         {
             _ctx = ctx;
+            _env = env;
         }
 
         public void Seed()
