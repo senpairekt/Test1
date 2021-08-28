@@ -1,34 +1,34 @@
-﻿using DutchTreat.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DutchTreat.Data;
 using DutchTreat.Services;
 using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 
 namespace DutchTreat.Controllers
 {
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
-        private readonly DutchContext _context;
+        private readonly IDutchRepository _repository;
 
-        public AppController(IMailService mailService, DutchContext context)
+        public AppController(IMailService mailService, IDutchRepository repository)
         {
-           _mailService= mailService;
-            this._context = context;
+            _mailService = mailService;
+            _repository = repository;
         }
 
         public IActionResult Index()
         {
-
             return View();
         }
+
         [HttpGet("contact")]
         public IActionResult Contact()
         {
-            
-
             return View();
         }
 
@@ -37,28 +37,25 @@ namespace DutchTreat.Controllers
         {
             if (ModelState.IsValid)
             {
-                // send the email
-                _mailService.SendMessage("feralsvk456@gmail.com", model.Subject, model.Message);
-                ViewBag.UserMessage = "Poslane";
+                // Send the Email
+                _mailService.SendMessage("shawn@wildermuth.com", model.Subject, $"From: {model.Name} - {model.Email}, Message: {model.Message}");
+                ViewBag.UserMessage = "Mail Sent...";
                 ModelState.Clear();
             }
-            else
-            {
-                // show the errors 
-            }
+
             return View();
         }
+
         public IActionResult About()
         {
-            ViewBag.Title = "O nas";
             return View();
         }
+
         public IActionResult Shop()
         {
-            var results = from p in _context.Products
-                          orderby p.Category
-                          select p;
-            return View(results.ToList());
+            var results = _repository.GetAllProducts();
+
+            return View(results);
         }
     }
 }

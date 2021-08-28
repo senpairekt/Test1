@@ -1,56 +1,53 @@
-﻿using DutchTreat.Data.Entities;
-using Microsoft.AspNetCore.Hosting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DutchTreat.Data.Entities;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DutchTreat.Data
 {
     public class DutchSeeder
     {
-        private readonly DutchContext _ctx;
-        private readonly IWebHostEnvironment _env;
-        public DutchSeeder(DutchContext ctx, IWebHostEnvironment env)
+        private readonly DutchContext context;
+        private readonly IWebHostEnvironment _hosting;
+
+        public DutchSeeder(DutchContext ctx, IWebHostEnvironment hosting)
         {
-            _ctx = ctx;
-            _env = env;
+            context = ctx;
+            _hosting = hosting;
         }
 
         public void Seed()
         {
-            _ctx.Database.EnsureCreated();
+            context.Database.EnsureCreated();
 
-            if (!_ctx.Products.Any())
+            if (!context.Products.Any())
             {
-                // Need to create sample data
-                var filePath = Path.Combine(_env.ContentRootPath, "Data/art.json");
-                var json = File.ReadAllText(filePath);
+                // Need to create the Sample Data
+                var file = Path.Combine(_hosting.ContentRootPath, "Data/art.json");
+                var json = File.ReadAllText(file);
                 var products = JsonSerializer.Deserialize<IEnumerable<Product>>(json);
+                context.Products.AddRange(products);
 
-                _ctx.Products.AddRange(products);
-
-                var order = new Order()
+                var order = context.Orders.Where(o => o.Id == 1).FirstOrDefault();
+                if (order != null)
                 {
-                    OrderDate = DateTime.Today,
-                    OrderNumber = "1000",
-                    Items = new List<OrderItem>()
-                    {
-                        new OrderItem()
-                        {
-                            Product = products.First(),
-                            Quantity = 5,
-                            UnitPrice = products.First().Price
-                        }
-                    }
+                    order.Items = new List<OrderItem>()
+          {
+            new OrderItem()
+            {
+              Product = products.First(),
+              Quantity = 5,
+              UnitPrice = products.First().Price
+            }
+          };
+                }
 
-                };
-
-                _ctx.Orders.Add(order);
-
-                _ctx.SaveChanges();
+                context.SaveChanges();
             }
         }
     }

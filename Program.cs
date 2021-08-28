@@ -17,7 +17,7 @@ namespace DutchTreat
         {
             var host = CreateHostBuilder(args).Build();
 
-            if (args.Length > 1 && args[0].ToLower() == "/seed")
+            if (args.Length > 0 && args[0].ToLower() == "/seed")
             {
                 RunSeeding(host);
                 return;
@@ -29,11 +29,9 @@ namespace DutchTreat
         private static void RunSeeding(IHost host)
         {
             var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
-            using (var scope = scopeFactory.CreateScope())
-            {
-                var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
-                seeder.Seed();
-            }
+            using var scope = scopeFactory.CreateScope();
+            var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
+            seeder.Seed();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
