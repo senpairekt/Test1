@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +12,7 @@ namespace DutchTreat.Data
     {
         public DutchContext(DbContextOptions<DutchContext> options) : base(options)
         {
+            // options.UseSqlServer();
         }
         public Microsoft.EntityFrameworkCore.DbSet<Product> Products { get; set; }
         public Microsoft.EntityFrameworkCore.DbSet<Order> Orders { get; set; }
