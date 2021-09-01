@@ -12,6 +12,7 @@ namespace DutchTreat.Data
     {
         public DutchContext(DbContextOptions<DutchContext> options) : base(options)
         {
+            // options.UseSqlServer();
         }
         public Microsoft.EntityFrameworkCore.DbSet<Product> Products { get; set; }
         public Microsoft.EntityFrameworkCore.DbSet<Order> Orders { get; set; }
