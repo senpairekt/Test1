@@ -12,26 +12,29 @@ namespace DutchTreat.Controllers
     public class OrdersController : Controller
     {
         private readonly IDutchRepository _repository;
-
         private readonly ILogger<OrdersController> _logger;
-        public OrdersController(IDutchRepository repository, ILogger<OrdersController> logger)
+
+        public OrdersController(IDutchRepository repository,
+          ILogger<OrdersController> logger)
         {
             _repository = repository;
             _logger = logger;
         }
+
         [HttpGet]
         public IActionResult Get()
         {
             try
             {
-               return  Ok( _repository.GetAllOrders());
+
+
+                return Ok(_repository.GetAllOrders());
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to get orders: {ex}");
-                return BadRequest("Failed to get orders");
+                _logger.LogError($"Failed to return orders: {ex}");
+                return BadRequest($"Failed to return orders");
             }
-
         }
     }
 }

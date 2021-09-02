@@ -37,6 +37,8 @@ namespace DutchTreat
 
             services.AddControllersWithViews()
               .AddRazorRuntimeCompilation();
+              .AddNewtonsoftJson();
+
             services.AddRazorPages();
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DutchTreat.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DutchTreat.Data
@@ -21,7 +22,7 @@ namespace DutchTreat.Data
 
         public IEnumerable<Order> GetAllOrders()
         {
-            return _ctx.Orders.ToList();
+            return _ctx.Orders.Include( o => o.Items).ToList();
         }
 
         public IEnumerable<Product> GetAllProducts()
@@ -49,7 +50,7 @@ namespace DutchTreat.Data
                        .ToList();
         }
 
-        public bool SaveChanges()
+        public bool SaveAll()
         {
             return _ctx.SaveChanges() > 0;
         }
