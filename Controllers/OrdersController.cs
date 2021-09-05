@@ -27,8 +27,25 @@ namespace DutchTreat.Controllers
             try
             {
 
-
                 return Ok(_repository.GetAllOrders());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to return orders: {ex}");
+                return BadRequest($"Failed to return orders");
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        public IActionResult Get(int id)
+        {
+
+            try
+            {
+                var order = _repository.GetOrderById(id);
+
+                if (order != null) return Ok(order);
+                else return NotFound();
             }
             catch (Exception ex)
             {
