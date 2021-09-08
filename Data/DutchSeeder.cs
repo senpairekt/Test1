@@ -10,33 +10,33 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace DutchTreat.Data
 {
-    public class DutchSeeder
+  public class DutchSeeder
+  {
+    private readonly DutchContext _ctx;
+    private readonly IWebHostEnvironment _hosting;
+
+    public DutchSeeder(DutchContext ctx, IWebHostEnvironment hosting)
     {
-        private readonly DutchContext context;
-        private readonly IWebHostEnvironment _hosting;
+      _ctx = ctx;
+      _hosting = hosting;
+    }
 
-        public DutchSeeder(DutchContext ctx, IWebHostEnvironment hosting)
+    public void Seed()
+    {
+      _ctx.Database.EnsureCreated();
+
+      if (!_ctx.Products.Any())
+      {
+        // Need to create the Sample Data
+        var file = Path.Combine(_hosting.ContentRootPath, "Data/art.json");
+        var json = File.ReadAllText(file);
+        var products = JsonSerializer.Deserialize<IEnumerable<Product>>(json);
+        _ctx.Products.AddRange(products);
+
+        var order = _ctx.Orders.Where(o => o.Id == 1).FirstOrDefault();
+        if (order != null)
         {
-            context = ctx;
-            _hosting = hosting;
-        }
-
-        public void Seed()
-        {
-            context.Database.EnsureCreated();
-
-            if (!context.Products.Any())
-            {
-                // Need to create the Sample Data
-                var file = Path.Combine(_hosting.ContentRootPath, "Data/art.json");
-                var json = File.ReadAllText(file);
-                var products = JsonSerializer.Deserialize<IEnumerable<Product>>(json);
-                context.Products.AddRange(products);
-
-                var order = context.Orders.Where(o => o.Id == 1).FirstOrDefault();
-                if (order != null)
-                {
-                    order.Items = new List<OrderItem>()
+          order.Items  = new List<OrderItem>()
           {
             new OrderItem()
             {
@@ -45,10 +45,10 @@ namespace DutchTreat.Data
               UnitPrice = products.First().Price
             }
           };
-                }
-
-                context.SaveChanges();
-            }
         }
+
+        _ctx.SaveChanges();
+      }
     }
+  }
 }
