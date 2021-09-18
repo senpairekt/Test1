@@ -36,7 +36,7 @@ namespace DutchTreat.Data
                     FirstName = "lolol",
                     LastName = "okokok",
                     Email = "feralsvk456@gmail.com",
-                    UserName = "shawn@dutchtreat.com"
+                    UserName = "feralsvk456@gmail.com"
                 };
 
                 var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
